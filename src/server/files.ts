@@ -1,6 +1,6 @@
 import { createServerFn } from '@tanstack/react-start'
 import { createClient } from '#/lib/supabase/server'
-import { type File } from '#/types/index'
+import type { File } from '#/types/index'
 import { createFileSchema, renameSchema } from '#/lib/schemas'
 import { getCurrentUserId } from './auth'
 import z from 'zod'
@@ -14,8 +14,8 @@ const getFiles = createServerFn({ method: 'GET' }).handler(async () => {
     .select('*')
     .eq('user_id', userId)
     .is('deleted_at', null)
+    .is('folder_id', null)
     .order('created_at', { ascending: false })
-    .limit(6)
 
   if (error) {
     throw new Error(error.message)

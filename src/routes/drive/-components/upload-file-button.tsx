@@ -11,62 +11,106 @@ interface UploadFileButtonProps {
 export function UploadFileButton({ folderId = null }: UploadFileButtonProps) {
   const uploadMutation = useUploadFile()
 
-  const [errorMessage, setErrorMessage] = useState<string | null>(null)
+  const [isUploading, setIsUploading] = useState(false)
+
+  const [progress, setProgress] = useState({
+    completed: 0,
+    total: 0,
+  })
+
+  const [errors, setErrors] = useState<string[]>([])
 
   const handleFileChange = async (
     event: React.ChangeEvent<HTMLInputElement>,
   ) => {
-    setErrorMessage(null)
+    const files = Array.from(event.target.files ?? [])
 
-    const file = event.target.files?.[0]
+    if (files.length === 0) return
 
-    if (!file) return
+    event.target.value = ''
+
+    setErrors([])
+    setIsUploading(true)
+
+    setProgress({
+      completed: 0,
+      total: files.length,
+    })
+
+    const failedFiles: string[] = []
+    let completed = 0
 
     try {
-      await uploadMutation.mutateAsync({
-        file,
-        folderId,
-      })
-    } catch (error) {
-      setErrorMessage(
-        error instanceof Error ? error.message : 'Failed to upload file',
-      )
+      for (const file of files) {
+        try {
+          await uploadMutation.mutateAsync({
+            file,
+            folderId,
+          })
+        } catch (error) {
+          const message =
+            error instanceof Error ? error.message : 'Unknown upload error'
+
+          failedFiles.push(`${file.name}: ${message}`)
+        } finally {
+          completed++
+
+          setProgress({
+            completed,
+            total: files.length,
+          })
+        }
+      }
+
+      setErrors(failedFiles)
     } finally {
-      event.target.value = ''
+      setIsUploading(false)
     }
   }
-
-  const isUploading = uploadMutation.isPending
 
   return (
     <div className="flex flex-col items-end gap-2">
       <input
         id="cloudvault-file-upload"
         type="file"
+        multiple
         className="sr-only"
         disabled={isUploading}
         onChange={handleFileChange}
       />
 
-      <Button
-        asChild
-        className={`gap-2 ${isUploading ? 'opacity-60' : ''}`}
-        disabled={isUploading}
-      >
+      <Button asChild className="gap-2" disabled={isUploading}>
         <label htmlFor="cloudvault-file-upload" className="cursor-pointer">
           {isUploading ? (
             <Loader2 className="size-4 animate-spin" />
           ) : (
             <Upload className="size-4" />
           )}
-          {isUploading ? 'Uploading...' : 'Upload'}
+
+          {isUploading
+            ? `Uploading ${progress.completed}/${progress.total}`
+            : 'Upload files'}
         </label>
       </Button>
 
-      {errorMessage && (
-        <p className="max-w-xs text-right text-sm text-destructive">
-          {errorMessage}
+      {isUploading && (
+        <p className="text-sm text-muted-foreground">
+          {progress.completed} of {progress.total} files processed
         </p>
+      )}
+
+      {errors.length > 0 && (
+        <div className="max-w-xs text-right text-sm text-destructive">
+          <p className="font-medium">
+            {errors.length} file(s) failed to upload:
+          </p>
+
+          <ul className="mt-1 space-y-1">
+            {errors.map((error) => (
+              <li key={error}>{error}</li>
+            ))}
+          </ul>
+        </div>
       )}
     </div>
   )

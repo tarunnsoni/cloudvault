@@ -85,11 +85,7 @@ export default function DriveContent({ search }: { search: string }) {
 
           <section>
             <div className="mb-3">
-              <h2 className="text-sm font-semibold">Recent files</h2>
-
-              <p className="mt-0.5 text-xs text-muted-foreground">
-                Your recently modified files
-              </p>
+              <h2 className="text-sm font-semibold">Your files</h2>
             </div>
 
             <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
@@ -133,11 +129,7 @@ export default function DriveContent({ search }: { search: string }) {
             <section>
               <div className="mb-3 flex items-center justify-between">
                 <div>
-                  <h2 className="text-sm font-semibold">Recent files</h2>
-
-                  <p className="mt-0.5 text-xs text-muted-foreground">
-                    Your recently modified files
-                  </p>
+                  <h2 className="text-sm font-semibold">Your files</h2>
                 </div>
 
                 <Button variant="ghost" size="sm" className="text-xs">

@@ -1,6 +1,6 @@
 import { createServerFn } from '@tanstack/react-start'
 import { createClient } from '#/lib/supabase/server'
-import { type Folder } from '#/types/index'
+import type { Folder } from '#/types/index'
 import { createFolderSchema, renameSchema } from '#/lib/schemas'
 import { getCurrentUserId } from './auth'
 import z from 'zod'
