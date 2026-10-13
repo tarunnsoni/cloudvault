@@ -8,8 +8,9 @@ import {
   RotateCcw,
   Star,
   Trash2,
-  type LucideIcon,
 } from 'lucide-react'
+
+import type { LucideIcon } from 'lucide-react'
 
 import type { FileType, FileCardProps } from '#/types/index'
 
@@ -26,7 +27,7 @@ import {
   useMarkFileStar,
   useMoveFileToTrash,
   useRestoreFile,
-} from '#/lib/react-query/mutations'
+} from '#/lib/react-query/mutations/file.mutation'
 import { useState } from 'react'
 import { RenameDialog } from './rename-dialog'
 
@@ -62,6 +63,7 @@ export default function FileCard({
   size,
   modified,
   starred = false,
+  storage_path,
   variant = 'default',
 }: FileCardProps) {
   const [renameOpen, setRenameOpen] = useState(false)

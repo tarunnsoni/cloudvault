@@ -15,6 +15,7 @@ export type FileCardProps = {
   size: string
   modified: string
   starred?: boolean
+  storage_path: string
   variant?: 'default' | 'trash'
 }
 

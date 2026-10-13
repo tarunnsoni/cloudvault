@@ -3,7 +3,9 @@ import { createFileRoute } from '@tanstack/react-router'
 import FolderCard from './-components/folder-card'
 import FileCard from './-components/file-card'
 
-import { useStarredFiles, useStarredFolders } from '#/lib/react-query/queries'
+import { useStarredFiles } from '#/lib/react-query/queries/file.query'
+import { useStarredFolders } from '#/lib/react-query/queries/folder.query'
+
 import { toFileCardProps } from '#/utils/file'
 import { Star } from 'lucide-react'
 import { Skeleton } from '#/components/ui/skeleton'

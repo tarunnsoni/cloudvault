@@ -1,4 +1,5 @@
-import { useTrashFiles, useTrashFolders } from '#/lib/react-query/queries'
+import { useTrashFiles } from '#/lib/react-query/queries/file.query'
+import { useTrashFolders } from '#/lib/react-query/queries/folder.query'
 import { createFileRoute } from '@tanstack/react-router'
 import { Trash2 } from 'lucide-react'
 import FolderCard from './-components/folder-card'

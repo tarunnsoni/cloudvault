@@ -12,7 +12,7 @@ import {
 } from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
 
-import { useCreateFolder } from '#/lib/react-query/mutations'
+import { useCreateFolder } from '#/lib/react-query/mutations/folder.mutation'
 
 type CreateFolderDialogProps = {
   open: boolean

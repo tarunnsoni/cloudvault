@@ -6,7 +6,8 @@ import FileCard from './file-card'
 
 import { FileCardSkeleton, FolderCardSkeleton } from './drive-card-skeletons'
 
-import { useFiles, useFolders } from '#/lib/react-query/queries'
+import { useFiles } from '#/lib/react-query/queries/file.query'
+import { useFolders } from '#/lib/react-query/queries/folder.query'
 import { toFileCardProps } from '#/utils/file'
 import CreateFolderDialog from './create-folder-dialog'
 import { useState } from 'react'
@@ -31,6 +32,8 @@ export default function DriveContent({ search }: { search: string }) {
   const hasResults = filteredFolders.length > 0 || filteredFiles.length > 0
 
   const isLoading = foldersLoading || filesLoading
+
+  console.log(filteredFiles)
 
   return (
     <main className="mx-auto w-full max-w-7xl px-4 py-7 sm:px-6 sm:py-9">

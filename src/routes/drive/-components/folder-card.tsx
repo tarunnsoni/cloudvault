@@ -14,7 +14,7 @@ import {
   useMoveFolderToTrash,
   usePermanentlyDeleteFolder,
   useRestoreFolder,
-} from '#/lib/react-query/mutations'
+} from '#/lib/react-query/mutations/folder.mutation'
 import { useState } from 'react'
 import { RenameDialog } from './rename-dialog'
 import { Link } from '@tanstack/react-router'

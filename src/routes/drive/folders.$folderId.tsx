@@ -2,8 +2,8 @@ import { Skeleton } from '#/components/ui/skeleton'
 import {
   useChildFolders,
   useFolder,
-  useFolderFiles,
-} from '#/lib/react-query/queries'
+} from '#/lib/react-query/queries/folder.query'
+import { useFolderFiles } from '#/lib/react-query/queries/file.query'
 import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import { ArrowLeft, FolderOpen, FolderPlus } from 'lucide-react'
 import { UploadFileButton } from './-components/upload-file-button'

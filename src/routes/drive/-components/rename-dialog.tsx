@@ -12,7 +12,8 @@ import {
 } from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
 
-import { useRenameFile, useRenameFolder } from '#/lib/react-query/mutations'
+import { useRenameFile } from '#/lib/react-query/mutations/file.mutation'
+import { useRenameFolder } from '#/lib/react-query/mutations/folder.mutation'
 
 type RenameDialogProps = {
   open: boolean

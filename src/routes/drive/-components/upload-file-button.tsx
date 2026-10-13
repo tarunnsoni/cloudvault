@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { Loader2, Upload } from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
-import { useUploadFile } from '#/lib/react-query/mutations'
+import { useUploadFile } from '#/lib/react-query/mutations/file.mutation'
 
 interface UploadFileButtonProps {
   folderId?: string | null
