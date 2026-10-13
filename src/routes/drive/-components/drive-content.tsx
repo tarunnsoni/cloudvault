@@ -33,8 +33,6 @@ export default function DriveContent({ search }: { search: string }) {
 
   const isLoading = foldersLoading || filesLoading
 
-  console.log(filteredFiles)
-
   return (
     <main className="mx-auto w-full max-w-7xl px-4 py-7 sm:px-6 sm:py-9">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">

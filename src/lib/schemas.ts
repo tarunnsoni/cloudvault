@@ -32,6 +32,10 @@ export const searchSchema = z.object({
   search: z.string().optional().default(''),
 })
 
+export const getFileUrlSchema = z.object({
+  fileId: z.uuid(),
+})
+
 // SCHEMA TYPES
 export type CreateFolderInput = z.infer<typeof createFolderSchema>
 export type CreateFileInput = z.infer<typeof createFileSchema>

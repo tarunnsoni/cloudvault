@@ -47,6 +47,5 @@ export function toFileCardProps(file: File): FileCardProps {
     size: formatFileSize(file.size),
     modified: formatModifiedDate(file.updated_at),
     starred: file.is_starred,
-    storage_path: file.storage_path
   }
 }

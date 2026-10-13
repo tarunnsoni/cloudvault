@@ -1,7 +1,7 @@
 import { createServerFn } from '@tanstack/react-start'
 import { createClient } from '#/lib/supabase/server'
 import type { File } from '#/types/index'
-import { createFileSchema, renameSchema } from '#/lib/schemas'
+import { createFileSchema, getFileUrlSchema, renameSchema } from '#/lib/schemas'
 import { getCurrentUserId } from './auth'
 import z from 'zod'
 
@@ -268,6 +268,39 @@ const restoreFile = createServerFn({ method: 'POST' })
     return file
   })
 
+const getFileUrl = createServerFn({ method: 'GET' })
+  .validator(getFileUrlSchema)
+  .handler(async ({ data }) => {
+    const userId = await getCurrentUserId()
+    const supabase = await createClient()
+
+    const { data: file, error: fileError } = await supabase
+      .from('files')
+      .select('id, storage_path, mime_type')
+      .eq('id', data.fileId)
+      .eq('user_id', userId)
+      .is('deleted_at', null)
+      .single()
+
+    if (fileError || !file) {
+      throw new Error('File not found or access denied')
+    }
+
+    const { data: signedUrlData, error: signedUrlError } =
+      await supabase.storage
+        .from('documents')
+        .createSignedUrl(file.storage_path, 60)
+
+    if (signedUrlError) {
+      throw new Error('Failed to generate file URL')
+    }
+
+    return {
+      signedUrl: signedUrlData.signedUrl,
+      mimeType: file.mime_type,
+    }
+  })
+
 export {
   getFiles,
   getStarredFiles,
@@ -279,4 +312,5 @@ export {
   moveFileToTrash,
   deleteFile,
   restoreFile,
+  getFileUrl,
 }

@@ -8,6 +8,7 @@ import {
   deleteFile,
   moveFileToTrash,
   restoreFile,
+  getFileUrl,
 } from '#/server/files'
 import { createBrowserSupabaseClient } from '../../supabase/client'
 import { useAuth } from '@clerk/tanstack-react-start'
@@ -153,5 +154,11 @@ export function useRestoreFile() {
         queryKey: [QUERY_KEYS.STARRED_FILES],
       })
     },
+  })
+}
+
+export function useGetFileUrl() {
+  return useMutation({
+    mutationFn: (fileId: string) => getFileUrl({ data: { fileId } }),
   })
 }

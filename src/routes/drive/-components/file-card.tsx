@@ -24,6 +24,7 @@ import {
 } from '@/components/ui/dropdown-menu'
 import {
   useDeleteFile,
+  useGetFileUrl,
   useMarkFileStar,
   useMoveFileToTrash,
   useRestoreFile,
@@ -63,7 +64,6 @@ export default function FileCard({
   size,
   modified,
   starred = false,
-  storage_path,
   variant = 'default',
 }: FileCardProps) {
   const [renameOpen, setRenameOpen] = useState(false)
@@ -73,6 +73,7 @@ export default function FileCard({
   const moveFileToTrash = useMoveFileToTrash()
   const deleteFilePermanently = useDeleteFile()
   const restoreFile = useRestoreFile()
+  const getFileUrl = useGetFileUrl()
 
   const handleFileStar = async () => {
     await markFileStar.mutateAsync(id)
@@ -80,6 +81,22 @@ export default function FileCard({
 
   const handleMoveFileToTrash = async () => {
     await moveFileToTrash.mutateAsync(id)
+  }
+
+  const handleFileOpen = async () => {
+    const newTab = window.open('about:blank', '_blank')
+
+    if (!newTab) {
+      return
+    }
+
+    try {
+      const { signedUrl } = await getFileUrl.mutateAsync(id)
+      newTab.location.href = signedUrl
+    } catch (error) {
+      newTab.close()
+      console.error('Failed to open file:', error)
+    }
   }
 
   return (
@@ -120,7 +137,12 @@ export default function FileCard({
         <DropdownMenuContent align="end">
           {variant === 'default' && (
             <>
-              <DropdownMenuItem>Open</DropdownMenuItem>
+              <DropdownMenuItem
+                onClick={handleFileOpen}
+                disabled={getFileUrl.isPending}
+              >
+                Open
+              </DropdownMenuItem>
 
               <DropdownMenuItem>Download</DropdownMenuItem>
 
