@@ -276,7 +276,7 @@ const getFileUrl = createServerFn({ method: 'GET' })
 
     const { data: file, error: fileError } = await supabase
       .from('files')
-      .select('id, storage_path, mime_type')
+      .select('id, storage_path, mime_type, name')
       .eq('id', data.fileId)
       .eq('user_id', userId)
       .is('deleted_at', null)
@@ -289,7 +289,9 @@ const getFileUrl = createServerFn({ method: 'GET' })
     const { data: signedUrlData, error: signedUrlError } =
       await supabase.storage
         .from('documents')
-        .createSignedUrl(file.storage_path, 60)
+        .createSignedUrl(file.storage_path, 60, {
+          download: file.name
+        })
 
     if (signedUrlError) {
       throw new Error('Failed to generate file URL')

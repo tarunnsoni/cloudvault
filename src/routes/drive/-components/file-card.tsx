@@ -99,6 +99,22 @@ export default function FileCard({
     }
   }
 
+  const handleFileDownload = async () => {
+    try {
+      const { signedUrl } = await getFileUrl.mutateAsync(id)
+
+      const link = document.createElement('a')
+      link.href = signedUrl
+      link.download = name
+
+      document.body.appendChild(link)
+      link.click()
+      link.remove()
+    } catch (error) {
+      console.error('Failed to download file:', error)
+    }
+  }
+
   return (
     <div className="flex min-w-0 items-center gap-3 rounded-xl border border-border/60 bg-background p-3 transition-all hover:-translate-y-0.5 hover:border-border hover:shadow-sm">
       <div
@@ -144,7 +160,12 @@ export default function FileCard({
                 Open
               </DropdownMenuItem>
 
-              <DropdownMenuItem>Download</DropdownMenuItem>
+              <DropdownMenuItem
+                onClick={handleFileDownload}
+                disabled={getFileUrl.isPending}
+              >
+                Download
+              </DropdownMenuItem>
 
               <DropdownMenuItem onClick={() => setRenameOpen(true)}>
                 Rename
