@@ -2,6 +2,7 @@ import { SignUpButton, useAuth } from '@clerk/tanstack-react-start'
 import { Button } from '@/components/ui/button'
 import { ArrowRight } from 'lucide-react'
 import HeaderUser from '#/integrations/clerk/header-user'
+import { Link } from '@tanstack/react-router'
 
 export default function Header() {
   const { isSignedIn } = useAuth()
@@ -9,7 +10,7 @@ export default function Header() {
   return (
     <header className="relative z-50 w-full px-3 pt-3 sm:px-6">
       <div className="mx-auto flex h-14 w-full max-w-7xl items-center justify-between gap-2 rounded-2xl border border-border/60 bg-background/95 px-3 shadow-lg shadow-black/5 backdrop-blur sm:h-20 sm:px-7">
-        <a href="/" className="min-w-0 shrink-0">
+        <Link to='/' className="min-w-0 shrink-0">
           <span
             className="
               text-lg font-semibold tracking-tight
@@ -19,7 +20,7 @@ export default function Header() {
             CloudVault
             <span className="ml-1 inline-block size-1.5 rounded-full bg-primary sm:size-2" />
           </span>
-        </a>
+        </Link>
 
         <div
           className="

@@ -11,7 +11,10 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  useSidebar,
 } from '@/components/ui/sidebar'
+
+import { Link } from '@tanstack/react-router'
 
 const mainNavigation = [
   {
@@ -32,6 +35,14 @@ const mainNavigation = [
 ]
 
 export default function DriveSidebar() {
+  const { isMobile, openMobile, setOpenMobile } = useSidebar()
+
+  const handleCloseSidebarOnNavigation = () => {
+    if (isMobile && openMobile) {
+      setOpenMobile(false)
+    }
+  }
+
   return (
     <Sidebar collapsible="icon" className="border-r border-border/60">
       <SidebarHeader className="border-b border-border/60">
@@ -66,10 +77,13 @@ export default function DriveSidebar() {
                 return (
                   <SidebarMenuItem key={item.title}>
                     <SidebarMenuButton asChild tooltip={item.title}>
-                      <a href={item.href}>
+                      <Link
+                        onClick={handleCloseSidebarOnNavigation}
+                        to={item.href}
+                      >
                         <Icon />
                         <span>{item.title}</span>
-                      </a>
+                      </Link>
                     </SidebarMenuButton>
                   </SidebarMenuItem>
                 )

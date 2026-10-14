@@ -8,11 +8,11 @@ import { Separator } from '@/components/ui/separator'
 import { SidebarTrigger } from '@/components/ui/sidebar'
 import { Button } from '#/components/ui/button'
 import { useNavigate, useSearch } from '@tanstack/react-router'
-import { Avatar, AvatarFallback, AvatarImage } from '#/components/ui/avatar'
+import { Avatar, AvatarFallback } from '#/components/ui/avatar'
 
 export default function DriveHeader() {
   const navigate = useNavigate()
-  const { isLoaded, user } = useUser()
+  const { isLoaded } = useUser()
 
   const { search = '' } = useSearch({
     from: '/drive',

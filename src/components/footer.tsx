@@ -1,6 +1,5 @@
-import { ArrowRight, Mail } from 'lucide-react'
-
-import { Button } from '@/components/ui/button'
+import { Link } from '@tanstack/react-router'
+import { Mail } from 'lucide-react'
 
 const footerLinks = [
   {
@@ -39,21 +38,19 @@ export default function Footer() {
           lg:px-12
         "
       >
-        {/* Top */}
         <div
           className="
             flex flex-col gap-10
             lg:flex-row lg:justify-between
           "
         >
-          {/* Brand */}
           <div className="max-w-sm">
-            <a href="/" className="inline-flex items-center">
+            <Link to="/" className="inline-flex items-center">
               <span className="text-xl font-semibold tracking-tight sm:text-2xl">
                 CloudVault
                 <span className="ml-1 inline-block size-2 rounded-full bg-green-300" />
               </span>
-            </a>
+            </Link>
 
             <p className="mt-3 text-sm leading-6 text-primary-foreground/70">
               Simple and secure cloud storage for your files, documents, and
@@ -74,7 +71,6 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Links */}
           <div
             className="
               grid grid-cols-2 gap-x-10 gap-y-8
@@ -107,7 +103,6 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Bottom */}
         <div className="mt-8 border-t border-primary-foreground/15 pt-5">
           <div
             className="
